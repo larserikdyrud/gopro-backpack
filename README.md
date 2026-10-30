@@ -1,4 +1,5 @@
 # GoPro backpack
+n[![CI](https://github.com/larserikdyrud/gopro-backpack/actions/workflows/ci.yml/badge.svg)](https://github.com/larserikdyrud/gopro-backpack/actions/workflows/ci.yml)
 
 A headless Raspberry Pi 5 "backpack" that lets a Radiomaster Boxer start and stop a GoPro HERO13/12 Black over ExpressLRS, and shows camera status on the radio as telemetry.
 
@@ -71,3 +72,7 @@ Copy the whole publish folder: `System.IO.Ports` needs `libSystem.IO.Ports.Nativ
 - ELRS 2.4 GHz receiver on GPIO14/15 (pins 8/10), CRSF at 115200 baud, Model Match on
 - GoPro HERO13 Black (HERO12 Black accepted) with Labs firmware (`WAKE=2`, optional record-on-boot), battery always fitted
 - Short USB-C data cable
+
+## License
+
+MIT, see [LICENSE](LICENSE).
