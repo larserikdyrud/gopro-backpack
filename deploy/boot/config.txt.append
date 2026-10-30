@@ -1,0 +1,5 @@
+# Append to /boot/firmware/config.txt
+[all]
+dtparam=uart0=on            # UART0 (ttyAMA0) on GPIO14/15
+usb_max_current_enable=1    # removes the 600 mA per-port USB limit
+dtparam=watchdog=on

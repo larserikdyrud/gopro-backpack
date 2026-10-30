@@ -1,0 +1,16 @@
+[Unit]
+Description=GoPro backpack
+# Never give up restarting: without this, systemd stops after 5 restarts in 10 s.
+StartLimitIntervalSec=0
+
+[Service]
+Type=notify
+ExecStart=/opt/gopro-backpack/GoProBackpack
+Restart=always
+RestartSec=2
+WatchdogSec=10
+User=gopro
+SupplementaryGroups=dialout
+
+[Install]
+WantedBy=multi-user.target
