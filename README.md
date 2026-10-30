@@ -39,9 +39,8 @@ deploy/                   systemd unit, watchdog/journald drop-ins, config.txt l
 
 ## Status
 
-Skeleton. Working and tested: CRSF framing and parsing, telemetry encoding, camera address discovery, camera polling. Still to do:
+Working and tested: CRSF framing and parsing, telemetry encoding, camera address discovery, camera polling, and `RecordController` with all six start/stop/mark rules. Its tests include randomized runs proving a stop is never sent without a valid stop gesture. Not yet run on hardware. Still to do:
 
-- [ ] `RecordController`: the start/stop/mark rules, plus the test proving stop only comes from the stop rule
 - [ ] FM warning texts alternating with the main text
 - [ ] Auto Power Down = Never (option id from camera capabilities)
 - [ ] Open points: status 33 OK values, status 35 unit, ELRS failsafe behaviour on CRSF

@@ -25,7 +25,7 @@ public sealed class TelemetryPublisher(
             try
             {
                 var snapshot = camera.Current;
-                var status = StatusFor(snapshot);
+                var status = StatusFor(snapshot, controller.ConsecutiveStartAttempts);
                 var text = TelemetryEncoder.MainText(
                     status, snapshot?.RecordingSeconds ?? 0, SdMinutes(snapshot), controller.StartPending);
 
@@ -48,12 +48,13 @@ public sealed class TelemetryPublisher(
         }
     }
 
-    private static StatusCode StatusFor(CameraSnapshot? s) => s switch
+    private static StatusCode StatusFor(CameraSnapshot? s, int consecutiveStartAttempts) => s switch
     {
         null => StatusCode.NoCam,
         { Encoding: true } => StatusCode.Rec,
-        // TODO: confirm status 33 OK values; also FAULT on overheat stop and 3 failed starts (section 6).
+        // TODO: confirm status 33 OK values; also FAULT when overheating stopped the camera (section 6).
         { SdStatus: not 0 } => StatusCode.Fault,
+        _ when consecutiveStartAttempts >= 3 => StatusCode.Fault,
         _ => StatusCode.Ready,
     };
 
