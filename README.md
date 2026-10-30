@@ -36,7 +36,8 @@ src/GoProBackpack/        .NET 9 worker service
   Telemetry/              Frame encoding and publishing
   HealthWatchdog.cs       systemd watchdog pings
 tests/GoProBackpack.Tests xUnit tests for the pure parts
-deploy/                   systemd unit, watchdog/journald drop-ins, config.txt lines, install script
+deploy/                   deploy.ps1, install.sh/uninstall.sh, systemd unit, watchdog/journald drop-ins, config.txt lines
+docs/getting-started.md   Step-by-step build, publish and install guide
 ```
 
 ## Status
@@ -47,25 +48,20 @@ Working and tested: CRSF framing and parsing, telemetry encoding, camera address
 - [ ] Auto Power Down = Never (option id from camera capabilities)
 - [ ] Open points: status 33 OK values, status 35 unit, ELRS failsafe behaviour on CRSF
 
-## Build and test
+## Quick start
 
-```sh
-dotnet test
+**[docs/getting-started.md](docs/getting-started.md)** walks through everything step by step: tools, building, publishing, preparing the Pi, wiring, installing, setting up the receiver, camera and Boxer, checking each link, and locking the filesystem.
+
+The short version, once the Pi is prepared (guide step 5):
+
+```powershell
+git clone https://github.com/larserikdyrud/gopro-backpack.git
+cd gopro-backpack
+dotnet test                                        # 57 tests, no hardware needed
+./deploy/deploy.ps1 -Target pi@gopro-bp.local      # publish, copy, install on the Pi
 ```
 
-## Deploy to the Pi
-
-On the Pi, turn the overlay filesystem off first (`raspi-config` → Performance Options → Overlay File System) and reboot.
-
-```sh
-dotnet publish src/GoProBackpack -c Release -r linux-arm64 -o deploy/publish
-scp -r deploy gopro-bp:~/gopro-backpack
-ssh gopro-bp 'cd ~/gopro-backpack && sh install.sh'
-```
-
-Then append `deploy/boot/config.txt.append` to `/boot/firmware/config.txt`, remove any `console=serial0` from `cmdline.txt`, turn the overlay back on and reboot.
-
-Copy the whole publish folder: `System.IO.Ports` needs `libSystem.IO.Ports.Native.so` next to the binary.
+Builds for the Pi are also attached to every CI run (artifact `gopro-backpack-linux-arm64`).
 
 ## Hardware
 
