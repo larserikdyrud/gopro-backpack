@@ -52,12 +52,13 @@ public sealed class TelemetryPublisher(
     {
         null => StatusCode.NoCam,
         { Encoding: true } => StatusCode.Rec,
-        // TODO: confirm status 33 OK values; also FAULT when overheating stopped the camera (section 6).
+        // Status 33: only PRIMARY_STORAGE OK (0) is ready; other values are SD faults.
+        // HOT/COLD/BUSY warning texts stay for the alternating-FM follow-up.
         { SdStatus: not 0 } => StatusCode.Fault,
         _ when consecutiveStartAttempts >= 3 => StatusCode.Fault,
         _ => StatusCode.Ready,
     };
 
-    // TODO: status 35 unit is unconfirmed (open point, section 11); assumed seconds here.
+    // Status 35 is seconds (Open GoPro REMAINING_VIDEO_TIME); show whole minutes on the radio.
     private static int SdMinutes(CameraSnapshot? s) => (s?.RemainingVideo ?? 0) / 60;
 }
