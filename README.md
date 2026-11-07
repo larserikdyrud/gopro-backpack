@@ -44,9 +44,10 @@ docs/getting-started.md   Step-by-step build, publish and install guide
 
 Working and tested: CRSF framing and parsing, telemetry encoding, camera address discovery, camera polling, and `RecordController` with all six start/stop/mark rules. Its tests include randomized runs proving a stop is never sent without a valid stop gesture. Not yet run on hardware. Still to do:
 
-- [ ] FM warning texts alternating with the main text
-- [ ] Auto Power Down = Never (option id from camera capabilities)
-- [ ] Open points: status 33 OK values, status 35 unit, ELRS failsafe behaviour on CRSF
+- [ ] FM warning texts alternating with the main text every 2 s (SD FULL, SD ERR, HOT, COLD, BUSY, STOP ERR)
+- [x] Auto Power Down = Never on connect (setting 59 option 0, Open GoPro)
+- [x] Status 33 OK value (PRIMARY_STORAGE OK = 0) and status 35 unit (seconds)
+- [ ] Open point: ELRS failsafe behaviour on CRSF (needs hardware: does the receiver repeat last RC values when the link is lost?)
 
 ## Quick start
 

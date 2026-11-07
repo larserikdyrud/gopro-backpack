@@ -269,7 +269,7 @@ You should see an address like `172.24.156.50`. The camera is the same address e
 curl -s http://172.24.156.51:8080/gopro/camera/state | head -c 300; echo
 ```
 
-A JSON reply with `"status"` means the camera answers. This is also how you answer the open points: look at status `33` (SD), `35` (remaining time) and `10` (recording).
+A JSON reply with `"status"` means the camera answers. Useful checks: status `10` (recording), `33` (PRIMARY_STORAGE, 0 = OK), and `35` (remaining video seconds).
 
 **3. The service is healthy.**
 
@@ -342,6 +342,6 @@ With the overlay off: `sh ~/gopro-backpack/uninstall.sh`. It removes the service
 | FM never appears on the Boxer | Telemetry path | Pi TXD → receiver RX wire, telemetry ratio not Off, sensors discovered |
 | `NO CAM` forever | USB network or camera mode | Data cable (not charge-only), USB mode GoPro Connect, `ip -4 addr` shows 172.2x, `curl` the camera |
 | Camera stops answering after boot | Webcam mode | The service sends `webcam/exit` by itself; if it keeps happening, check the log and the design doc's open points |
-| Camera falls asleep | Auto Power Down not Never | Set it in the camera menu (the service does not set it yet) |
+| Camera falls asleep | Auto Power Down not Never | The service sets setting 59 option 0 on connect; check the log if that failed, or set Never in the camera menu |
 | Pi reboots or `vcgencmd get_throttled` is not `0x0` | Power | 5 A supply, `PSU_MAX_CURRENT=5000`, shorter cable |
 | Changes vanish after reboot | Overlay on | Expected; turn it off to change anything (step 11) |

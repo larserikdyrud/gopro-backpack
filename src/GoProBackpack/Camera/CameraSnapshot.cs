@@ -15,9 +15,12 @@ public sealed record CameraSnapshot
     public bool Encoding { get; init; }
     /// <summary>Status 13, seconds into the current recording.</summary>
     public int RecordingSeconds { get; init; }
-    /// <summary>Status 33. TODO: confirm which values count as OK (open point, section 11).</summary>
+    /// <summary>
+    /// Status 33 (PRIMARY_STORAGE). Open GoPro: OK=0, SD_CARD_FULL=1, SD_CARD_REMOVED=2,
+    /// SD_CARD_FORMAT_ERROR=3, SD_CARD_BUSY=4, SD_CARD_SWAPPED=8. Only 0 counts as OK.
+    /// </summary>
     public int SdStatus { get; init; }
-    /// <summary>Status 35. TODO: confirm unit (seconds or minutes, open point, section 11).</summary>
+    /// <summary>Status 35 (REMAINING_VIDEO_TIME), seconds of video left at current settings.</summary>
     public int RemainingVideo { get; init; }
     /// <summary>Status 70.</summary>
     public int BatteryPercent { get; init; }

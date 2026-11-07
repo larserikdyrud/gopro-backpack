@@ -92,8 +92,9 @@ public sealed class CameraMonitor(
             await client.WebcamExitAsync(ct);
         }
 
-        // TODO: read the option id for "Never" from the camera's capabilities (open point, section 11).
-        // await client.SetSettingAsync(59, neverOption, ct);
+        // Setting 59 AUTO_POWER_DOWN: Never = 0 (Open GoPro AutoPowerDown.NEVER).
+        if (!await client.SetSettingAsync(59, 0, ct))
+            logger.LogWarning("Could not set Auto Power Down to Never (setting 59 option 0)");
 
         logger.LogInformation("Camera connected at {Address}", client.Address);
         return true;
